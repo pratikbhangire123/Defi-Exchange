@@ -8,7 +8,7 @@ import {
   getCDTokensBalance,
   getEtherBalance,
   getLPTokensBalance,
-   getReserveOfCDTokens,
+  getReserveOfCDTokens,
 } from "../utils/getAmounts";
 import {getTokensAfterRemove, removeLiquidity} from "../utils/removeLiquidity";
 import {swapTokens, getAmountOfTokensReceivedFromSwap} from "../utils/swap";
@@ -16,13 +16,14 @@ import {swapTokens, getAmountOfTokensReceivedFromSwap} from "../utils/swap";
 export default function Home() {
   
   const [loading, setLoading] = useState(false);
-  const [liquidityTab, setLiquidity] = useState(true);
+  const [liquidityTab, setLiquidityTab] = useState(true);
   const zero = BigNumber.from(0);
   const [ethBalance, setEtherBalance] = useState(zero);
   const [reservedCD, setReservedCD] = useState(zero);
   const [etherBalanceContract, setEtherBalanceContract] = useState(zero);
   const [cdBalance, setCDBalance] = useState(zero);
   const [lpBalance, setLPBalance] = useState(zero);
+  const [addEther, setAddEther] = useState(zero);
   const [addCDTokens, setAddCDTokens] = useState(zero);
   const [removeEther, setRemoveEther] = useState(zero);
   const [removeCD, setRemoveCD] = useState(zero);
@@ -45,14 +46,14 @@ export default function Home() {
 
       const _lpBalance = await getLPTokensBalance(provider, address);
 
-      const _reserveCD = await getReserveOfCDTokens(provider);
+      const _reservedCD = await getReserveOfCDTokens(provider);
 
       const _ethBalanceContract = await getEtherBalance(provider, null, true);
 
       setEtherBalance(_ethBalance);
       setCDBalance(_cdBalance);
       setLPBalance(_lpBalance);
-      setReservedCD(_reserveCD);
+      setReservedCD(_reservedCD);
       setEtherBalanceContract(_ethBalanceContract);
 
     }
@@ -90,7 +91,7 @@ export default function Home() {
   const _getAmountOfTokensReceivedFromSwap = async (_swapAmount) => {
     try {
 
-      const _swapAmountWEI = utils.parseEther(_swapAmount, toString());
+      const _swapAmountWEI = utils.parseEther(_swapAmounttoString());
 
       if (!_swapAmountWEI.eq(zero)) {
         const provider = await getProviderOrSigner();
